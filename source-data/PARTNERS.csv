@@ -1,0 +1,7 @@
+partner_id,partner_name,partner_category,integration_type,partner_since_date,platform_revenue_share_pct,primary_verticals_served
+PTR-001,DoorDash,Food & Delivery,API - Embedded Checkout,2021-03-15,0.015,"Restaurant, Ghost Kitchen, Cafe, Bakery"
+PTR-002,Amazon,E-commerce Marketplace,API - Seller Central Widget,2020-11-01,0.012,"E-commerce Retail, CPG Brand, Marketplace Reseller"
+PTR-003,Worldpay,Payments / Acquiring,White-label Embedded,2022-01-10,0.018,"Retail Store, Auto Repair, Salon, Convenience Store"
+PTR-004,Mindbody,Wellness SaaS,API - Embedded Dashboard,2021-08-22,0.02,"Fitness Studio, Spa, Yoga Studio, Wellness Clinic"
+PTR-005,Toast,Restaurant POS,API - Embedded Checkout,2022-06-05,0.016,"Restaurant, Bar, Food Truck"
+PTR-006,Squarespace,E-commerce / Website Builder,White-label Embedded,2023-02-14,0.014,"E-commerce Retail, Creative Services, Photography Studio"
