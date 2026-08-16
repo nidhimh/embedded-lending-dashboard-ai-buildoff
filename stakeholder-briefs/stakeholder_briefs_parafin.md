@@ -1,20 +1,15 @@
-# Stakeholder Briefs — Finance Data Lead Project (Parafin)
+# Stakeholder Briefs 
 
-The JD names five groups this role serves directly: Finance, Product, GTM, Engineering/Data, and Investors/Lenders/Board. Below is a one-paragraph brief for each, framed around what that stakeholder specifically needs and how the dashboard project demonstrates it.
+Below is a one-paragraph brief for each, framed around what that stakeholder specifically needs and how the dashboard project demonstrates it.
 
 ---
 
 ## 1. Finance (internal finance team / leadership)
-Finance needs trustworthy, current numbers on origination volume, revenue run-rate, and portfolio health without having to chase down a spreadsheet every time. This project's Metrics Dashboard tracks exactly those three things — origination principal by partner and month, a 3-month trailing average annualized revenue run-rate (deliberately smoothed so leadership isn't reacting to single-month noise), and portfolio-wide delinquency — all built on live formulas so the numbers stay correct as new data lands, not a static snapshot someone has to remember to refresh.
 
-## 2. Product
-Product needs to know how lending performance breaks down by partner integration and merchant vertical, so they can prioritize roadmap decisions — e.g., is a partner's embedded flow originating well but converting poorly, or underwriting worse than others. The partner × month cross-tab and cohort-level views in this dashboard are built to answer exactly that kind of "is this partner integration working" question, without Product needing to write their own query.
+The dashboard tracks $39.68M in total origination principal disbursed across all partners from January 2022 through August 2026, broken out by partner and month with an accompanying trend chart. Current annualized revenue run-rate, based on a 3-month trailing average of recognized fee revenue (to smooth out single-month noise), sits in the low-to-mid $900K–$1.6M range depending on the period and is refreshed automatically as new revenue rows are added. Portfolio credit performance is visible in the Cohort Delinquency tab: 7.0% of total dollar volume across all origination cohorts is currently delinquent or in default, with a color-coded view showing which vintage months are underperforming so we can watch for deteriorating cohorts early.
 
-## 3. GTM (sales / partnerships)
-GTM needs quick, credible numbers to bring into partner conversations — origination growth, repayment health, how a specific partner's book is performing relative to others — often on short notice. This project's Reconciliation and Cohort tabs are built so that kind of ad hoc pull ("how's the DoorDash book doing this quarter") is a filter away rather than a custom analysis, with the underlying logic transparent enough that GTM can trust what they're repeating externally.
+## 2. Engineering / Data
+The workbook has four raw data tabs (PARTNERS, ORIGINATIONS, REPAYMENTS, REVENUE_RECOGNIZED) feeding three analysis tabs, all built on live SUMIFS/INDEX-MATCH formulas rather than static values, so the dashboard recalculates correctly if the underlying CSVs are refreshed. The Reconciliation tab does an anti-join to surface any origination_id in ORIGINATIONS with zero matching rows in REPAYMENTS — it currently flags 10 records (7 funded within the last two weeks, which is expected lag; 3 funded 9–12 months ago with no repayments at all, which is a genuine data-integrity gap worth investigating in the source system). Worth noting: those 10 gap records were synthetically added to demonstrate the tab, since the original dataset had a clean 1-to-1 match with no gaps.
 
-## 4. Engineering / Data
-Engineering cares about whether financial data is structured cleanly, whether there's a real audit trail, and whether Finance is quietly maintaining a fragile pile of manual overrides. This project's four-table relational structure (PARTNERS, ORIGINATIONS, REPAYMENTS, REVENUE_RECOGNIZED) with clear join keys, plus a Reconciliation tab that does a live anti-join to catch orphaned records, is meant to show the habit of building financial data as something a data team could pick up and trust — not a one-off Excel artifact.
-
-## 5. Investors / Lenders / Board
-This audience needs a small number of defensible, well-labeled metrics — origination volume, revenue run-rate, delinquency by vintage — presented in a way that survives scrutiny in a board deck or lender diligence request. The cohort delinquency view in particular speaks their language directly: vintage-based loss tracking is the standard lens lenders and investors use to judge portfolio quality, and showing it by dollar volume (not just count) is the detail that signals real familiarity with how credit portfolios get evaluated.
+## 3. Partners
+This dashboard gives visibility into how your merchants' advances are performing on the platform — total capital originated by month, how quickly it's being repaid, and how each funding cohort is trending on delinquency. Across the full portfolio, 93% of dollar volume is repaying on schedule or has already been paid off, with the remaining 7% currently delinquent or in default, broken out by the month each cohort was funded so we can spot and discuss any concerning trends together early rather than after they compound.
