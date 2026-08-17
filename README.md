@@ -23,7 +23,7 @@ A fintech extends embedded merchant cash advances to small businesses operating 
 ## Highlights
 
 
-- 🔗 **[Dashboard walkthrough]("https://1drv.ms/x/c/a42c27f41a72e65b/IQQyijd58b9IT7JjyxVjdHnrAU13JeBfBvYbV84gukTbiUc?em=2&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True")
+- 🔗 **[Dashboard walkthrough](https://1drv.ms/x/c/a42c27f41a72e65b/IQQyijd58b9IT7JjyxVjdHnrAU13JeBfBvYbV84gukTbiUc?em=2&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True)
 ** — the finished Excel dashboard in action
 - 🔗 **[Catching a data gap](#)** — how I found and resolved a reconciliation issue mid-build
 - 🔗 **[Generated stakeholder summary](#)** — one of the AI-generated briefs, translating the dataset into a narrative
