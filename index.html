@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embedded Lending Portfolio Dashboard — Built 3x with AI</title>
+<meta name="description" content="A synthetic embedded merchant cash advance analytics build, built three times with Claude, Microsoft Copilot, and Gemini.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#071527;
+    --navy:#0B1F3A;
+    --paper:#F5F1E8;
+    --paper-dim:#EDE7D8;
+    --ink:#1B2430;
+    --ink-soft:#4B5666;
+    --gold:#C9A227;
+    --gold-soft:#E7C25C;
+    --teal:#3F6F66;
+    --rule:#D8CFBA;
+    --rule-dark:rgba(255,255,255,0.14);
+    --paper-on-navy:rgba(245,241,232,0.78);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+  }
+  ::selection{background:var(--gold-soft); color:var(--navy-deep);}
+
+  a{color:var(--teal);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+
+  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:
+      radial-gradient(1100px 480px at 82% -12%, rgba(201,162,39,0.14), transparent 60%),
+      linear-gradient(180deg, var(--navy-deep), var(--navy) 78%);
+    color:var(--paper);
+    padding:96px 0 76px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid var(--rule-dark);
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 34px);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:1;}
+  .hero .eyebrow{color:var(--gold-soft); margin-bottom:22px; display:flex; align-items:center; gap:10px;}
+  .hero .eyebrow::before{content:""; width:22px; height:1px; background:var(--gold-soft); display:inline-block;}
+
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(2.3rem, 4.6vw, 3.6rem);
+    line-height:1.06;
+    margin:0 0 22px;
+    letter-spacing:-0.01em;
+    max-width:15ch;
+  }
+  h1 em{font-style:italic; font-weight:500; color:var(--gold-soft);}
+
+  .hero-sub{
+    font-size:1.08rem;
+    color:var(--paper-on-navy);
+    max-width:58ch;
+    margin:0 0 40px;
+  }
+
+  .stack-ledger{
+    display:flex; flex-wrap:wrap; gap:0;
+    border-top:1px solid var(--rule-dark);
+    border-bottom:1px solid var(--rule-dark);
+  }
+  .stack-ledger div{
+    flex:1 1 160px;
+    padding:16px 20px;
+    border-right:1px solid var(--rule-dark);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.82rem;
+  }
+  .stack-ledger div:last-child{border-right:none;}
+  .stack-ledger .stack-name{display:block; color:var(--paper); font-weight:500; letter-spacing:0.02em;}
+  .stack-ledger .stack-tag{display:block; color:var(--paper-on-navy); margin-top:4px; font-size:0.74rem;}
+  .stack-ledger .check{color:var(--gold-soft); margin-right:6px;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:64px 0;}
+  section.on-paper{border-bottom:1px solid var(--rule);}
+  h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.8rem;
+    margin:0 0 8px;
+    color:var(--navy);
+  }
+  .section-eyebrow{color:var(--teal); margin-bottom:10px;}
+  .lede{color:var(--ink-soft); max-width:62ch; margin:0 0 36px; font-size:1.02rem;}
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:44px;}
+  @media (max-width:760px){.two-col{grid-template-columns:1fr;}}
+
+  p{margin:0 0 16px; color:var(--ink-soft);}
+  p:last-child{margin-bottom:0;}
+  strong{color:var(--ink); font-weight:600;}
+
+  /* ---------- LEDGER ROWS (business scenario) ---------- */
+  .ledger{border-top:1px solid var(--rule);}
+  .ledger-row{
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:24px;
+    padding:22px 0;
+    border-bottom:1px solid var(--rule);
+    align-items:baseline;
+  }
+  @media (max-width:600px){.ledger-row{grid-template-columns:1fr;}}
+  .ledger-code{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    color:var(--gold);
+    background:var(--paper-dim);
+    padding:4px 8px;
+    border-radius:2px;
+    display:inline-block;
+    height:fit-content;
+  }
+  .ledger-row h3{
+    font-family:'Fraunces',serif;
+    font-size:1.14rem;
+    font-weight:600;
+    margin:0 0 4px;
+    color:var(--navy);
+  }
+  .ledger-row p{margin:0; font-size:0.96rem;}
+
+  /* ---------- DASHBOARD / STAMP ---------- */
+  .dashboard-frame{
+    position:relative;
+    background:var(--navy-deep);
+    border-radius:6px;
+    padding:14px;
+    margin:0 0 28px;
+    box-shadow:0 22px 48px -22px rgba(7,21,39,0.55);
+  }
+  .dashboard-frame iframe{
+    width:100%;
+    height:600px;
+    border:0;
+    border-radius:2px;
+    display:block;
+    background:#fff;
+  }
+  .stamp{
+    position:absolute;
+    top:-18px;
+    right:-14px;
+    width:104px; height:104px;
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(-9deg);
+    background:var(--navy-deep);
+    box-shadow:0 8px 20px -6px rgba(0,0,0,0.5);
+  }
+  .stamp span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.62rem;
+    letter-spacing:0.1em;
+    color:var(--gold-soft);
+    text-align:center;
+    line-height:1.5;
+    text-transform:uppercase;
+  }
+  @media (max-width:600px){ .stamp{width:80px; height:80px; top:-12px; right:-10px;} .stamp span{font-size:0.5rem;} }
+
+  .link-list{list-style:none; margin:0; padding:0; display:grid; gap:10px;}
+  .link-list li{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.88rem;
+    border-bottom:1px dashed var(--rule);
+    padding-bottom:10px;
+  }
+  .link-list a{color:var(--navy); text-decoration:none; font-weight:500;}
+  .link-list a:hover{color:var(--teal); text-decoration:underline;}
+  .link-list .arrow{color:var(--gold); margin-right:8px;}
+  .note-inline{color:var(--ink-soft); font-family:'Inter',sans-serif; font-size:0.8rem; margin-top:2px;}
+
+  /* ---------- REPO STRUCTURE ---------- */
+  .tree{
+    background:var(--navy-deep);
+    color:var(--paper-on-navy);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.84rem;
+    line-height:1.7;
+    padding:26px 28px;
+    border-radius:6px;
+    overflow-x:auto;
+    white-space:pre;
+    margin:0 0 32px;
+  }
+  .tree .folder{color:var(--gold-soft);}
+  .tree .comment{color:rgba(245,241,232,0.45);}
+
+  table{width:100%; border-collapse:collapse; font-size:0.92rem;}
+  th,td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  th{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:500;
+    border-bottom:2px solid var(--navy);
+  }
+  td:first-child{font-family:'JetBrains Mono',monospace; color:var(--navy); font-weight:500; white-space:nowrap;}
+  td{color:var(--ink-soft);}
+
+  /* ---------- DEMONSTRATES ---------- */
+  .demo-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
+  @media (max-width:700px){.demo-grid{grid-template-columns:1fr;}}
+  .demo-cell{background:var(--paper); padding:26px 28px;}
+  .demo-cell h3{
+    font-family:'Fraunces',serif;
+    font-size:1.02rem;
+    font-weight:600;
+    margin:0 0 8px;
+    color:var(--navy);
+  }
+  .demo-cell p{font-size:0.92rem; margin:0;}
+
+  /* ---------- DATA NOTE ---------- */
+  .note-box{
+    border:1px solid var(--rule);
+    border-left:3px solid var(--gold);
+    padding:20px 24px;
+    background:var(--paper-dim);
+    font-size:0.92rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-deep);
+    color:var(--paper-on-navy);
+    padding:52px 0 40px;
+  }
+  footer h2{color:var(--paper); font-size:1.3rem;}
+  footer p{color:var(--paper-on-navy); max-width:56ch;}
+  footer .eyebrow{color:var(--gold-soft); margin-bottom:14px;}
+  .foot-rule{border:0; border-top:1px solid var(--rule-dark); margin:40px 0 24px;}
+  .fine{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:rgba(245,241,232,0.4); letter-spacing:0.04em;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Synthetic fintech analytics build</p>
+    <h1>Embedded Lending Portfolio Dashboard<br><em>— built three times with AI.</em></h1>
+    <p class="hero-sub">A mock, fully synthetic analytics build for a fintech providing embedded merchant cash advances (MCA) to small businesses through platform partners like DoorDash, Amazon, Worldpay, and Mindbody — the same dataset, dashboard, and stakeholder narratives, reproduced once per AI stack.</p>
+    <div class="stack-ledger">
+      <div><span class="stack-name"><span class="check">✓</span>Claude</span><span class="stack-tag">source data · dashboard · briefs</span></div>
+      <div><span class="stack-name"><span class="check">✓</span>Microsoft Copilot</span><span class="stack-tag">source data · dashboard · briefs</span></div>
+      <div><span class="stack-name"><span class="check">✓</span>Gemini</span><span class="stack-tag">source data · dashboard · briefs</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="on-paper">
+  <div class="wrap two-col">
+    <div>
+      <p class="section-eyebrow eyebrow">Why this exists</p>
+      <h2>One build, three AI stacks, no winner declared.</h2>
+    </div>
+    <div>
+      <p>I built the same project — same relational dataset, same auditable Excel dashboard, same stakeholder narratives — three separate times, once per AI stack: Claude, Microsoft Copilot, and Gemini. The goal wasn't to pick a winner. It was to demonstrate that I can pick up any AI tool a team already uses and get to a production-quality, audit-ready deliverable fast — the core skill behind transitioning smoothly into AI-augmented analyst work.</p>
+      <p>I'm a Business Analyst showing recruiters and hiring managers two things at once: that I can model and analyze a real fintech lending business the way a Finance Data Lead would, and that I can do it with AI as a genuine accelerant — building the same rigorous, checkable output regardless of which tool is in front of me.</p>
+    </div>
+  </div>
+</section>
+
+<section class="on-paper">
+  <div class="wrap">
+    <p class="section-eyebrow eyebrow">The business scenario</p>
+    <h2>What the dataset and dashboard model</h2>
+    <p class="lede">A fintech extends embedded merchant cash advances to small businesses operating on partner platforms. Four ledger lines run through the whole build:</p>
+    <div class="ledger">
+      <div class="ledger-row">
+        <span class="ledger-code">ORIG</span>
+        <div><h3>Origination volumes</h3><p>Advance amounts issued, broken out by partner and cohort.</p></div>
+      </div>
+      <div class="ledger-row">
+        <span class="ledger-code">REV</span>
+        <div><h3>Revenue run-rate</h3><p>Recognized revenue tracked over time.</p></div>
+      </div>
+      <div class="ledger-row">
+        <span class="ledger-code">DELQ</span>
+        <div><h3>Portfolio delinquency</h3><p>Cohort-level delinquency tracking.</p></div>
+      </div>
+      <div class="ledger-row">
+        <span class="ledger-code">RECON</span>
+        <div><h3>Reconciliation &amp; audit trails</h3><p>Every metric on the dashboard ties back to source data through live formulas, not hardcoded numbers.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="on-paper">
+  <div class="wrap">
+    <p class="section-eyebrow eyebrow">Highlights</p>
+    <h2>The dashboard, live</h2>
+    <p class="lede">Embedded straight from the workbook — the same file a stakeholder would open.</p>
+    <div class="dashboard-frame">
+      <div class="stamp"><span>Audited<br>&amp; Reconciled</span></div>
+      <iframe width="700" height="600" frameborder="0" scrolling="no" src="https://1drv.ms/x/c/a42c27f41a72e65b/IQQyijd58b9IT7JjyxVjdHnrAU13JeBfBvYbV84gukTbiUc?em=2&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True" title="Embedded lending portfolio dashboard"></iframe>
+    </div>
+    <ul class="link-list">
+      <li><span class="arrow">→</span><a href="#">Dashboard walkthrough</a> — the finished Excel dashboard in action<div class="note-inline"></div></li>
+      <li><span class="arrow">→</span><a href="#">Catching a data gap</a> — how I found and resolved a reconciliation issue mid-build</li>
+      <li><span class="arrow">→</span><a href="#">Generated stakeholder summary</a> — one of the AI-generated briefs, translating the dataset into a narrative</li>
+    </ul>
+  </div>
+</section>
+
+<section class="on-paper">
+  <div class="wrap">
+    <p class="section-eyebrow eyebrow">Repo structure</p>
+    <h2>Identical folders, one per AI stack</h2>
+    <p class="lede">So the same deliverable can be compared across tools directly.</p>
+    <div class="tree">├── <span class="folder">claude/</span>
+│   ├── source-data/          <span class="comment"># Synthetic CSVs (Partners, Originations, Repayments, Revenue Recognized)</span>
+│   ├── dashboard/             <span class="comment"># Excel dashboard: Metrics, Reconciliation, Cohort Delinquency</span>
+│   ├── data-dictionary/       <span class="comment"># Field-level definitions for every table and metric</span>
+│   └── stakeholder-briefs/    <span class="comment"># Finance, Product, GTM, Engineering, and Investor/Board summaries</span>
+│
+├── <span class="folder">microsoft-copilot/</span>
+│   ├── source-data/
+│   ├── dashboard/
+│   ├── data-dictionary/
+│   └── stakeholder-briefs/
+│
+└── <span class="folder">gemini/</span>
+    ├── source-data/
+    ├── dashboard/
+    ├── data-dictionary/
+    └── stakeholder-briefs/</div>
+    <table>
+      <thead><tr><th>Folder</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr><td>source-data/</td><td>Synthetic relational dataset (CSV) modeling partners, originations, repayments, and recognized revenue — generated with that stack's AI tool.</td></tr>
+        <tr><td>dashboard/</td><td>An auditable Excel dashboard built on live formulas — origination volumes, revenue run-rate, and delinquency, with reconciliation logic and audit trails baked in.</td></tr>
+        <tr><td>data-dictionary/</td><td>Definitions for every table, field, and metric, so the dashboard is legible to someone who didn't build it.</td></tr>
+        <tr><td>stakeholder-briefs/</td><td>Plain-language summaries of the same dataset written for five different audiences: Finance, Product, GTM, Engineering, and Investor/Board.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="on-paper">
+  <div class="wrap">
+    <p class="section-eyebrow eyebrow">What this demonstrates</p>
+    <h2>Five skills, one build</h2>
+  </div>
+  <div class="wrap" style="padding:0;">
+    <div class="demo-grid">
+      <div class="demo-cell">
+        <h3>Data modeling</h3>
+        <p>Designing a relational schema that reflects how an embedded lending business actually works — partners → originations → repayments → recognized revenue.</p>
+      </div>
+      <div class="demo-cell">
+        <h3>Financial &amp; portfolio analysis</h3>
+        <p>Origination volume, revenue run-rate, and delinquency metrics — the core KPIs a lending Finance team tracks.</p>
+      </div>
+      <div class="demo-cell">
+        <h3>Auditability</h3>
+        <p>Every number in the dashboard is traceable to source data through live formulas and reconciliation logic, not static outputs.</p>
+      </div>
+      <div class="demo-cell">
+        <h3>Stakeholder communication</h3>
+        <p>Translating the same underlying dataset into five distinct narratives, tuned to what Finance, Product, GTM, Engineering, and the Board each actually need to know.</p>
+      </div>
+      <div class="demo-cell" style="grid-column:1 / -1;">
+        <h3>Tool-agnostic AI fluency</h3>
+        <p>Reproducing the same rigorous deliverable across Claude, Microsoft Copilot, and Gemini, showing the workflow — not the tool — is the transferable skill.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="on-paper">
+  <div class="wrap">
+    <p class="section-eyebrow eyebrow">Note on the data</p>
+    <div class="note-box">All data in this project is <strong>synthetic and fictional</strong>, generated for demonstration purposes. It does not represent any real company, partner, or portfolio.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="eyebrow">About me</p>
+    <h2>Business Analyst, AI-augmented workflow</h2>
+    <p>Exploring how AI tools can accelerate the kind of financial and data analysis work that used to take days into something built in hours — without sacrificing rigor or auditability.</p>
+    <hr class="foot-rule">
+    <p class="fine">Embedded Lending Portfolio Dashboard — synthetic demo build</p>
+  </div>
+</footer>
+
+</body>
+</html>
