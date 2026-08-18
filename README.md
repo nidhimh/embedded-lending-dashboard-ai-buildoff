@@ -29,7 +29,7 @@ A fintech extends embedded merchant cash advances to small businesses operating 
 - ** — how I found and resolved a reconciliation issue mid-build - Refer Reconciliation tab
 - 🔗 **[Generated stakeholder summary](https://github.com/nidhimh/embedded-lending-dashboard-ai-buildoff/blob/main/stakeholder-briefs/stakeholder_briefs_parafin.md)** — one of the AI-generated briefs, translating the dataset into a narrative
 
-*(Replace the `#` links above with your actual links.)*
+
 
 ## Repo structure
 
